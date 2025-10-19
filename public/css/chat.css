@@ -1,0 +1,158 @@
+/* Reset & base */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f3e3f3;
+  min-height: 100%;
+  overflow-x: hidden; /* prevent horizontal scroll */
+  overflow-y: hidden;
+}
+
+/* Wrapper to allow sticky footer */
+.main-bg {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: #e6b6d6;
+  box-shadow: 6px 10px 0 #a97c9b;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  border-radius: 0 0 40px 40px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 18px;
+}
+
+.brand {
+  font-size: 32px;
+  font-weight: 900;
+  color: #231f20;
+}
+
+/* Main content container */
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  padding-bottom: 100px; /* ensure content clears fixed footer */
+}
+
+/* Chatbox card */
+.login-box.chat {
+  background: #fff; /* changed from dark gray for readability */
+  border-radius: 28px;
+  box-shadow: 8px 10px 10px #b3a3b3;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat content */
+.chat-box {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  color: #231f20;
+  flex: 1;
+  /* hide scrollbar (Firefox/IE/Edge legacy) */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.chat-box::-webkit-scrollbar { /* hide scrollbar (WebKit) */
+  display: none;
+}
+
+/* Also support views that use an element id instead of class */
+#chat-box { scrollbar-width: none; -ms-overflow-style: none; }
+#chat-box::-webkit-scrollbar { display: none; }
+
+.message {
+  margin: 5px 0;
+}
+
+.message.user {
+  text-align: right;
+  color: #231f20;
+  font-weight: 600;
+}
+
+.message.bot {
+  text-align: left;
+  color: #6b4a6b;
+  font-weight: 600;
+}
+
+/* Input area */
+.chat-input {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #e6b6d6;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.chat-input button:hover {
+  background: #d49dc4;
+}
+
+/* Footer */
+footer {
+  background: #e6b6d6;
+  padding: 20px 24px 28px 24px; /* extra bottom padding to cover white space */
+  border-radius: 30px 30px 0 0;
+  box-shadow: 0 -4px 0 #a97c9b;
+  text-align: center;
+  font-weight: 700;
+  color: #fff;
+  margin-top: auto; /* push footer to bottom in flex layouts */
+  box-sizing: border-box;
+  position: fixed;  /* pin to bottom to avoid gap */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+footer a {
+  color: #fff;
+  margin: 0 8px;
+  font-size: 1.2rem;
+  transition: 0.2s;
+}
+
+footer a:hover {
+  color: #a11d7c;
+}
+
+

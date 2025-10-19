@@ -1,0 +1,222 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.main-bg {
+  background: #f3e3f3;
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background: #e6b6d6;
+  box-shadow: 6px 10px 0 #a97c9b;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  border-radius: 0 0 40px 40px;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 3;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Hide navigation on login page */
+.header nav, .header .dropdown { display: none !important; }
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 18px;
+}
+
+.brand {
+  font-size: 48px;
+  font-weight: 1000;
+  color: #231f20;
+  letter-spacing: 1px;
+}
+
+.container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3e3f3;
+  position: relative;
+  z-index: 1;
+  margin-top: -10px; /* Pulls the container up to hide the shadow's top part */
+}
+/* Login Box */
+.login-box {
+  background: #f7e4f2; /* lighter, softer pink */
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(169, 124, 155, 0.25);
+  padding: 40px 36px;
+  width: 360px;
+  max-width: 90%;
+  text-align: center;
+  margin: 60px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(169, 124, 155, 0.35);
+}
+
+/* Heading */
+.login-box h1 {
+  color: #a11d7c;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Labels */
+.login-box label {
+  display: block;
+  color: #8a3d70;
+  font-size: 0.95rem;
+  text-align: left;
+  margin-bottom: 6px;
+  margin-top: 14px;
+  font-weight: 600;
+}
+
+/* Inputs */
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  width: 90%;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border: 1px solid #e0b8d8;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  transition: 0.2s;
+}
+
+.login-box input:focus {
+  border-color: #a11d7c;
+  box-shadow: 0 0 8px rgba(161, 29, 124, 0.25);
+}
+
+/* Button */
+.login-box button {
+  width: 100%;
+  padding: 10px 0;
+  background: #a11d7c;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.login-box button:hover {
+  background: #8a1562;
+  transform: translateY(-2px);
+}
+
+/* Signup link */
+.signup-link {
+  color: #444;
+  font-size: 0.9rem;
+  margin-top: 14px;
+  display: block;
+}
+
+.signup-link a {
+  color: #a11d7c;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 4px;
+  transition: color 0.2s;
+}
+
+.signup-link a:hover {
+  color: #8a1562;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .login-box {
+    padding: 30px 20px;
+  }
+
+  .login-box h1 {
+    font-size: 1.6rem;
+  }
+
+  .login-box input[type="email"],
+  .login-box input[type="password"],
+  .login-box input[type="text"] {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  .login-box button {
+    padding: 8px 0;
+  }
+}
+
+
+footer {
+  background: #e6b6d6;
+  padding: 18px 0 10px 0;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  border-radius: 30px 30px 0 0;
+  box-shadow: 0 -4px 0 #a97c9b;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 65px;
+  gap: 18px;
+  margin: 0;
+  max-width: none;
+}
+
+.footer-content span {
+  font-weight: 700;
+  color: #fff;
+  margin-right: 10px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.footer-content a {
+  color: #231f20;
+  font-size: 1.3rem;
+  margin-right: 10px;
+  transition: color 0.2s;
+  
+}
+
+.footer-content a:hover {
+  color: #a11d7c;
+}
