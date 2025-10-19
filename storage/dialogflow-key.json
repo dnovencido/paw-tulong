@@ -1,0 +1,41 @@
+/storage/dialogflow-key.json
+{
+"type": "service_account",
+"project_id": "pawtulong-w9hn",
+"private_key_id": "655be41c2a84aa553dc7c9416c3bb3c1d5a81b80",
+"private_key": "
+-----BEGIN PRIVATE KEY-----
+\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCY9z7EDDtk1MD0\nKFDdiWA
+Ba+bsanweFmTzTOoYa0UGRkI0j8keS21QMX2T6AZQ1y11yBnipt/DBvHC\nK55YqN2riUGo7wLyVK
+R0vMX5k39UIvjJRx03c+t+9nWJRUV6xB1ifzDYG1CDg+qf\nLibgrHw2zzVrISiqkCZbkgAZmE/YO08+
+pfASGjzInNFCkNYjKWwOlwHfaYdQEovk\n9lobPHmkNkYxu7LtHDPEDhHliR05maxbxPpPd65xYE+l
+qjEiMyIzyM+ijpa2wtyF\nha4fNQiz48PxO24UyjccP+paX0mUlN0T4///NnpGAVq5y4uJ+aKYf9dtoU
+R5/h0O\nFJUXqaeDAgMBAAECggEAKFhSBDhrs/EPgXZeucfBfC5/Bk0htnfWoXtgZRdp6bk/\nPgjMl
+YJ0bwnWotu4SrsuYNnpxeeYriJXQozpo13KtbMqj8mWn97mT2n415ZpJ4Jf\n1wq8MIOREfgkURPl
+uvcd/vwoIF+38TAqgliUZX7o9jXZ04s35CDIFS/hed679H5r\nwAp0GqScnZ23uH+vhERrzpqrvup0Sr
+w63ALlPv2RpRMQKvLefY6z0Dm3rgP8dtBr\nDTtOSVP8xv/1bxBdJK0/QsMSMIxdi9oaur3j/ZzMnQ
+gad8QR4l9q5t2Ml8gM7AcV\nMj8uksWcCQ1uMSDFrsZGlf8wLzTpsWQlmWqia8QKiQKBgQDLPU2
+KI/SRQNfOGMKk\nUBZ2arkA9yvzY4cTXpYHbuxKHlv4lYeijgduoU5NsoDktjAUjwN4cyRjUHGIbWL
+D\nBLwTGQbFjDSUnlZJtAMMNJkgeOpas4nrvhRKvGX9W71iF5SqdQb0eBkzNxztbHHJ\nfqMRV0A
+04AZ9gDBy8IMV3MFt+QKBgQDArOcKHRWmKmyKCwgM0JRYzP7EBYZI8e9z\nz80MKA/PwFACoF
+8zA2lBlgmxQtyVRZ57WO+Du22WVaNs5m01J6QoHHp6S1V7d+cR\nD93Os7+DwtqN4/kmmTBP
+WJwfsxWAYROFh6/86xZVoQB5QqxODQbxZeRhPf3QWn5V\nl+OP6kgQWwKBgQCvT4LaHOeyf79
+nPL5w49BsduR8a7kSqhBy6cz6Pnk9+fAVfk5Q\nLrlEeYnExawfHPReV3qD5LZHoLU+HDTryeK9ioHn
+12fnpqkBzHAwkBJiC0sD0Aix\nO/Xe/aHwKLk0quiHHIlSSWJbZjfiqP+B8mWQ6LUupuuSSAgCrWo1
+aoXDaQKBgQCd\nbypBm05LPjL+ANGNFwmAHdC1/wWgqP9NlCgpnLp+uNcnrj7bghgJXT2CN+3h
+ksdS\nZnMfIpEC2+rzWr01R7TciZiSQOgSQQDvchV9hmYglaDbe8HjhhxxWSgIxt30zl2T\nKDHm6Xi
+Qc0Pd0VrVU9Ouf+FCi9LO4oKEEd4BhB9qLQKBgDoB2Z0mh092xwVjqgFb\n92I7mDHOVlHbUajAt
+fqdu9N4Q4i+0NAZbM7lPPLg7d6QilscUlstS0G27X+443Vq\nmrusYPPOD+yOW1xdpdkRired/5kDJv
+NUEAv3LyEhX14U7FdCvOwX9/76ral8i5Es\nRDW1F94wecspSBTPCWl6qRq7\n-----END PRIVATE
+KEY-----\n"
+,
+"client_email": "pawtulong@pawtulong-w9hn.iam.gserviceaccount.com",
+"client_id": "111988942468468690666",
+"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+"token_uri": "https://oauth2.googleapis.com/token",
+"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+"client_x509_cert_url":
+"https://www.googleapis.com/robot/v1/metadata/x509/pawtulong%40pawtulong-
+w9hn.iam.gserviceaccount.com",
+"universe_domain": "googleapis.com"
+}
