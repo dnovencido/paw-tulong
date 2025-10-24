@@ -33,31 +33,30 @@ class ClientController extends Controller
 {
     $user = Auth::user();
 
-    
+    // Total chat count
     $totalChats = ChatLog::where('user_id', $user->id)->count();
 
-    
+    // Most asked questions (top 10 unique)
     $mostAsked = ChatLog::where('user_id', $user->id)
+        ->whereNotNull('question')
+        ->where('question', '!=', '')
         ->select('question', DB::raw('COUNT(*) as count'))
         ->groupBy('question')
         ->orderByDesc('count')
         ->limit(10)
         ->pluck('question');
 
-    
+    // Recent conversations — strictly last 10 valid chats
     $recentConversations = ChatLog::where('user_id', $user->id)
-        ->latest()
+        ->whereNotNull('question')
+        ->where('question', '!=', '')
+        ->orderByDesc('created_at')
         ->take(10)
         ->get();
 
-        dd([
-    'user_id' => $user->id,
-    'totalChats' => ChatLog::where('user_id', $user->id)->count(),
-    'existingLogs' => ChatLog::where('user_id', $user->id)->pluck('question'),
-]);
-
     return view('client.landing', compact('user', 'mostAsked', 'recentConversations', 'totalChats'));
 }
+
 
     
     public function show()

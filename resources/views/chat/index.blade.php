@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div style="display:flex; height:100vh; margin:0; padding:0; background:#fafafa;">
+<div style="display:flex; height:100vh; margin:0; padding:0; background:#fafafa; overflow:hidden;">
 
     {{-- ✅ LEFT SIDEBAR --}}
     <div style="
@@ -29,11 +29,13 @@
             padding:18px 0;
             border-radius:8px;
             margin:0 16px 10px 16px;
+            overflow-y:hidden;
+            flex-shrink:0;
         ">
             Recent Conversations
         </div>
 
-        <div id="sessions-container" style="flex:1; overflow-y:auto; padding:0 16px 16px 16px;">
+        <div id="sessions-container" style="flex:1; overflow-y:auto; padding:0 16px 16px 16px; min-height:0;">
             {{-- ✅ New Chat Button --}}
             <button id="new-chat-btn" style="
                 width:100%;
@@ -82,26 +84,64 @@
                     {{-- 3-dot menu --}}
                     <div class="dropdown" style="position:absolute; top:8px; right:10px;">
                         <button class="session-menu-btn" style="
-                            background:none; border:none; font-size:1.2rem; cursor:pointer; padding:0 4px;
-                        ">⋮</button>
-                        <div class="dropdown-content" style="
-                            display:none;
-                            position:absolute;
-                            right:0;
-                            top:24px;
-                            background:#fff;
-                            border:1px solid #ddd;
-                            border-radius:6px;
-                            box-shadow:0 2px 6px rgba(0,0,0,0.15);
-                            z-index:1000;
-                        ">
-                            <button class="rename-session" data-id="{{ $session->id }}" style="
-                                display:block; width:100%; padding:6px 12px; background:none; border:none; text-align:left; cursor:pointer;
-                            ">Edit</button>
-                            <button class="delete-session" data-id="{{ $session->id }}" style="
-                                display:block; width:100%; padding:6px 12px; background:none; border:none; text-align:left; cursor:pointer; color:red;
-                            ">Delete</button>
-                        </div>
+    background:none; 
+    border:none; 
+    font-size:1.2rem; 
+    cursor:pointer; 
+    padding:0 6px;
+">⋮</button>
+
+<div class="dropdown-content" style="
+    display:none;
+    position:absolute;
+    right:0;
+    top:24px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:6px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+    z-index:1000;
+    min-width: 100px;  /* make dropdown wider */
+    padding: 4px 0;
+">
+
+    <button class="rename-session" data-id="{{ $session->id }}" style="
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 16px; /* slightly more padding */
+        background: #f9f9f9;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: 0.2s;
+        color: #333;
+    " onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f9f9f9'">
+        ✏️ Edit
+    </button>
+
+    <button class="delete-session" data-id="{{ $session->id }}" style="
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 16px;
+        background: #f9f9f9;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: 500;
+        color: #d9534f;
+        transition: 0.2s;
+    " onmouseover="this.style.background='#f8d7da'" onmouseout="this.style.background='#f9f9f9'">
+        🗑️ Delete
+    </button>
+
+</div>
                     </div>
                 </div>
                 @endforeach
@@ -230,18 +270,30 @@ document.querySelectorAll('.session-menu-btn').forEach(btn=>{
 document.addEventListener('click',()=>{ document.querySelectorAll('.dropdown-content').forEach(menu=>menu.style.display='none'); });
 
 // 🔴 Delete
-document.querySelectorAll('.delete-session').forEach(btn=>{
-    btn.addEventListener('click',async e=>{
-        e.preventDefault(); e.stopPropagation();
-        const id=btn.getAttribute('data-id');
-        if(!confirm('Delete this conversation?')) return;
-        try{
-            const res=await fetch(`/chatbot/${id}`,{ method:'DELETE', headers:{'X-CSRF-TOKEN':'{{ csrf_token() }}'} });
-            const data=await res.json();
-            if(data.success) btn.closest('.session-item').remove();
-        }catch(err){ console.error(err); }
+// 🔴 Delete (silent + auto reload)
+document.querySelectorAll('.delete-session').forEach(btn => {
+    btn.addEventListener('click', async e => {
+        e.preventDefault();
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        try {
+            const res = await fetch(`/chatbot/${id}`, {
+                method: 'DELETE',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+            });
+            const data = await res.json();
+            if (data.success) {
+                btn.closest('.session-item').remove();
+                // auto reload after deletion
+                location.reload();
+            }
+        } catch (err) {
+            console.error(err);
+        }
     });
 });
+
+
 
 // 🔹 Inline rename
 document.querySelectorAll('.rename-session').forEach(btn => {

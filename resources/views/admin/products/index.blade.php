@@ -167,7 +167,7 @@
 
             <div class="form-group">
                 <label>Category:</label>
-                <select name="category" required>
+                <select id="edit_product_category" name="category" required>
                     <option value="">Select Category</option>
                     <option value="Vaccines">Vaccines</option>
                     <option value="Dewormers">Dewormers</option>
@@ -264,13 +264,38 @@ function previewEditImage(file) {
 // 🟣 Populate Edit Modal
 document.querySelectorAll('.edit-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.getElementById('edit_product_id').value = btn.dataset.id;
-        document.getElementById('edit_product_name').value = btn.dataset.name;
-        document.getElementById('edit_product_description').value = btn.dataset.description;
-        document.getElementById('edit_product_category').value = btn.dataset.category;
-        editPreview.src = '/img/' + btn.dataset.image;
-        editPreview.style.display = 'block';
-        document.getElementById('editModal').style.display = 'block';
+        const id = btn.dataset.id;
+        const name = btn.dataset.name;
+        const description = btn.dataset.description;
+        const image = btn.dataset.image;
+        const category = btn.dataset.category?.trim().toLowerCase(); // normalize category text
+
+        // fill inputs
+        document.getElementById('edit_product_id').value = id;
+        document.getElementById('edit_product_name').value = name;
+        document.getElementById('edit_product_description').value = description;
+
+        // ✅ set correct category (case-insensitive match)
+        const select = document.getElementById('edit_product_category');
+        let found = false;
+        for (const option of select.options) {
+            if (option.value.trim().toLowerCase() === category) {
+                option.selected = true;
+                found = true;
+                break;
+            }
+        }
+        if (!found) select.selectedIndex = 0; // fallback to "Select Category"
+
+        // ✅ image preview
+        if (image) {
+            editPreview.src = '/img/' + image;
+            editPreview.style.display = 'block';
+        } else {
+            editPreview.style.display = 'none';
+        }
+
+        document.getElementById('editModal').style.display = 'flex';
     });
 });
 

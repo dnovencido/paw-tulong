@@ -136,6 +136,7 @@ nameInput.addEventListener('input', () => {
     saveBtn.style.display = nameInput.value.trim() !== '{{ $user->username }}' ? 'inline-block' : 'none';
 });
 
+
 // Modal logic
 const modal = document.getElementById('changePasswordModal');
 const link = document.getElementById('changePasswordLink');
@@ -173,5 +174,7 @@ passwordForm.addEventListener('submit', async e => {
         feedback.innerHTML = 'Network error. Please try again.';
     }
 });
+
+
 </script>
 @endsection

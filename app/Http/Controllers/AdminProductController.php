@@ -45,15 +45,16 @@ class AdminProductController extends Controller
         'name' => 'required|min:2',
         'description' => 'required|min:10',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-        'category' => 'required|string',
+        // category no longer required — keep old one
     ]);
 
     $data = [
         'name' => $request->name,
         'description' => $request->description,
-        'category' => $request->category,
+        'category' => $product->category, // use existing category
     ];
 
+    // only update if new image is uploaded
     if ($request->hasFile('image')) {
         $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
         $request->file('image')->move(public_path('img'), $imageName);
@@ -64,6 +65,7 @@ class AdminProductController extends Controller
 
     return redirect()->route('admin.products')->with('success', 'Product updated successfully!');
 }
+
 
 
     public function destroy(Product $product)

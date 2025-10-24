@@ -1,22 +1,71 @@
-/* Reset & base */
+/* ============================
+   RESET & BASE
+============================ */
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: 'Poppins', sans-serif;
-  background: #f3e3f3;
-  min-height: 100%;
-  overflow-x: hidden; /* prevent horizontal scroll */
-  overflow-y: hidden;
+  background: #fafafa;
+  overflow: hidden; /* prevent page scroll */
 }
 
-/* Wrapper to allow sticky footer */
+/* ============================
+   SCROLL ONLY INSIDE CHAT & SIDEBAR
+============================ */
+#chat-box, 
+#sessions-container {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #d2a8d2 #f3e3f3; /* thumb + track */
+}
+
+/* --- WebKit Scrollbar --- */
+#chat-box::-webkit-scrollbar,
+#sessions-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chat-box::-webkit-scrollbar-track,
+#sessions-container::-webkit-scrollbar-track {
+  background: #f3e3f3;
+  border-radius: 10px;
+}
+
+#chat-box::-webkit-scrollbar-thumb,
+#sessions-container::-webkit-scrollbar-thumb {
+  background-color: #d2a8d2;
+  border-radius: 10px;
+}
+
+#chat-box:hover::-webkit-scrollbar-thumb,
+#sessions-container:hover::-webkit-scrollbar-thumb {
+  background-color: #c78db4;
+}
+
+/* Hide scrollbar from rest of the page */
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================
+   LAYOUT
+============================ */
 .main-bg {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Header */
+div[style*="display:flex; height:100vh;"] {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================
+   HEADER
+============================ */
 .header {
   background: #e6b6d6;
   box-shadow: 6px 10px 0 #a97c9b;
@@ -38,19 +87,23 @@ html, body {
   color: #231f20;
 }
 
-/* Main content container */
+/* ============================
+   MAIN CONTAINER
+============================ */
 .container {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  padding-bottom: 100px; /* ensure content clears fixed footer */
+  padding-bottom: 100px;
 }
 
-/* Chatbox card */
+/* ============================
+   CHAT CARD
+============================ */
 .login-box.chat {
-  background: #fff; /* changed from dark gray for readability */
+  background: #fff;
   border-radius: 28px;
   box-shadow: 8px 10px 10px #b3a3b3;
   padding: 20px;
@@ -60,28 +113,21 @@ html, body {
   flex-direction: column;
 }
 
-/* Chat content */
+/* CHAT CONTENT */
 .chat-box {
   background: #f9f9f9;
   border-radius: 12px;
   padding: 16px;
-  height: 300px;
+  height: 500px; /* fixed height */
   overflow-y: auto;
   margin-bottom: 15px;
   color: #231f20;
   flex: 1;
-  /* hide scrollbar (Firefox/IE/Edge legacy) */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.chat-box::-webkit-scrollbar { /* hide scrollbar (WebKit) */
-  display: none;
 }
 
-/* Also support views that use an element id instead of class */
-#chat-box { scrollbar-width: none; -ms-overflow-style: none; }
-#chat-box::-webkit-scrollbar { display: none; }
-
+/* ============================
+   MESSAGES
+============================ */
 .message {
   margin: 5px 0;
 }
@@ -98,7 +144,9 @@ html, body {
   font-weight: 600;
 }
 
-/* Input area */
+/* ============================
+   INPUT AREA
+============================ */
 .chat-input {
   display: flex;
   gap: 10px;
@@ -127,21 +175,22 @@ html, body {
   background: #d49dc4;
 }
 
-/* Footer */
+/* ============================
+   FOOTER
+============================ */
 footer {
   background: #e6b6d6;
-  padding: 20px 24px 28px 24px; /* extra bottom padding to cover white space */
+  padding: 20px 24px 28px 24px;
   border-radius: 30px 30px 0 0;
   box-shadow: 0 -4px 0 #a97c9b;
   text-align: center;
   font-weight: 700;
   color: #fff;
-  margin-top: auto; /* push footer to bottom in flex layouts */
-  box-sizing: border-box;
-  position: fixed;  /* pin to bottom to avoid gap */
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
+  box-sizing: border-box;
 }
 
 footer a {
@@ -154,5 +203,3 @@ footer a {
 footer a:hover {
   color: #a11d7c;
 }
-
-

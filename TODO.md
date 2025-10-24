@@ -1,0 +1,2 @@
+- [x] Update LandingController.php to return objects with 'question' and 'count' for $mostAsked
+- [x] Verify the view displays questions correctly without "Unknown"
