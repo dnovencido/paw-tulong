@@ -4,10 +4,10 @@
 
 @php
     use Illuminate\Support\Str;
+    use App\Models\ChatLog;
     /**
-     * @var \Illuminate\Support\Collection|\stdClass[] $mostAsked
-     * @var \Illuminate\Support\Collection|\App\Models\ChatLog[] $recentConversations
-     * @var \Illuminate\Support\Collection|\App\Models\ChatSession[] $recentSessions
+     * Variables passed:
+     * $user, $mostAsked, $recentConversations, $totalChats
      */
     $layoutCss = 'landing.css';
     $page = 'home';
@@ -20,11 +20,12 @@
   <div class="summary-cards">
     @php
       $cards = [
-        ['label'=>'Most Asked Questions', 'value'=>count($mostAsked ?? []), 'color'=>'#6b4a6b'],
+        
+        ['label'=>'Most Asked Questions', 'value'=>count($mostAsked ?? []), 'color'=>'#8b5c8b'],
       ];
     @endphp
     @foreach($cards as $card)
-      <div class="summary-card">
+      <div class="summary-card" style="background-color: {{ $card['color'] }}20;">
         <div class="summary-card-label">{{ $card['label'] }}</div>
         <div class="summary-card-value">{{ $card['value'] }}</div>
       </div>
@@ -46,8 +47,19 @@
       <h3>💬 Frequently Asked Questions</h3>
       <ul class="faq-list">
         @forelse($mostAsked ?? [] as $i => $q)
+          @php
+            $answer = ChatLog::where('user_id', $user->id)
+                ->where('question', $q)
+                ->orderByDesc('created_at')
+                ->value('answer');
+          @endphp
           <li class="faq-item">
-            <strong>#{{ $i+1 }}</strong> — {{ Str::limit($q, 60) }}
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <strong>#{{ $i+1 }}</strong> — {{ Str::limit($q, 80) }}
+            </div>
+            <div class="faq-answer" style="display:none;">
+              {!! $answer ? e($answer) : '<em>No answer recorded.</em>' !!}
+            </div>
           </li>
         @empty
           <li style="text-align:center;color:#999;">No questions yet.</li>
@@ -59,26 +71,29 @@
     <div class="recent-conversations">
       <h3>📝 Recent Conversations</h3>
       <div class="conversations-grid">
-        @forelse($recentSessions ?? [] as $session)
-          <a href="{{ route('chatbot.show', $session->id) }}" class="conversation-link">
+        @forelse($recentConversations ?? [] as $chat)
+          <a href="{{ route('chatbot.show', $chat->chat_session_id) }}" class="conversation-link">
             <div class="conversation-item">
-              <div><strong>Session:</strong> {{ Str::limit($session->session_name, 80) }}</div>
-              <div>
-                <strong>Preview:</strong> {{ Str::limit($session->preview ?? 'No preview', 80) }}
-              </div>
-              <div>
-                {{ $session->last_updated }}
-              </div>
+              <div><strong>Question:</strong> {{ Str::limit($chat->question, 100) }}</div>
+              <div><strong>Answer:</strong> {{ Str::limit($chat->answer ?? 'No answer', 120) }}</div>
+              <div class="conversation-date">{{ $chat->created_at->diffForHumans() }}</div>
             </div>
           </a>
         @empty
-          <div style="grid-column:span 2;text-align:center;color:#999;">
-            No recent conversations yet.
-          </div>
+          <div style="text-align:center;color:#999;">No recent conversations yet.</div>
         @endforelse
       </div>
     </div>
 
   </div>
 </div>
+
+{{-- 💡 JS for toggling FAQ answers --}}
+<script>
+function toggleFAQ(element) {
+  const answer = element.nextElementSibling;
+  answer.style.display = answer.style.display === "none" ? "block" : "none";
+}
+</script>
+
 @endsection

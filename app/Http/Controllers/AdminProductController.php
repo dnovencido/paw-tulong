@@ -51,7 +51,7 @@ class AdminProductController extends Controller
     $data = [
         'name' => $request->name,
         'description' => $request->description,
-        'category' => $product->category, // use existing category
+        'category' => $request->filled('category') ? $request->category : $product->category,
     ];
 
     // only update if new image is uploaded

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
-    
     public function index()
     {
         $user = Auth::user();
@@ -29,24 +28,29 @@ class ClientController extends Controller
     }
 
     
-    public function landing()
+public function landing()
 {
     $user = Auth::user();
 
-    // Total chat count
     $totalChats = ChatLog::where('user_id', $user->id)->count();
 
-    // Most asked questions (top 10 unique)
-    $mostAsked = ChatLog::where('user_id', $user->id)
-        ->whereNotNull('question')
+    // ✅ Get top 10 most asked questions as full objects
+    $mostAsked = ChatLog::whereNotNull('question')
         ->where('question', '!=', '')
         ->select('question', DB::raw('COUNT(*) as count'))
         ->groupBy('question')
         ->orderByDesc('count')
         ->limit(10)
-        ->pluck('question');
+        ->get();
 
-    // Recent conversations — strictly last 10 valid chats
+    // ✅ Attach most recent valid answer to each
+    foreach ($mostAsked as $item) {
+        $item->answer = ChatLog::where('question', $item->question)
+            ->whereNotNull('answer')
+            ->orderByDesc('created_at')
+            ->value('answer');
+    }
+
     $recentConversations = ChatLog::where('user_id', $user->id)
         ->whereNotNull('question')
         ->where('question', '!=', '')
@@ -58,21 +62,19 @@ class ClientController extends Controller
 }
 
 
-    
+
     public function show()
     {
         $user = Auth::user();
         return view('client.profile', compact('user'));
     }
 
-    
     public function edit()
     {
         $user = auth()->user();
         return view('client.edit-profile', compact('user'));
     }
 
-    
     public function update(Request $request)
     {
         $user = auth()->user();
@@ -96,7 +98,6 @@ class ClientController extends Controller
         return redirect()->route('client.profile')->with('success', 'Profile updated successfully!');
     }
 
-    
     public function changePassword(Request $request)
     {
         $request->validate([
@@ -115,7 +116,6 @@ class ClientController extends Controller
         return back()->with('success', 'Password changed successfully!');
     }
 
-    
     public function logout(Request $request)
     {
         Auth::logout();
@@ -124,18 +124,18 @@ class ClientController extends Controller
 
         return redirect()->route('login.form');
     }
+
     public function updateProfile(Request $request)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    $request->validate([
-        'username' => 'required|string|max:255',
-    ]);
+        $request->validate([
+            'username' => 'required|string|max:255',
+        ]);
 
-    $user->username = $request->username;
-    $user->save();
+        $user->username = $request->username;
+        $user->save();
 
-    return back()->with('success', 'Profile updated successfully!');
-}
-
+        return back()->with('success', 'Profile updated successfully!');
+    }
 }
