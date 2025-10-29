@@ -34,7 +34,6 @@
                        class="{{ ($page ?? '') === 'chatbot' ? 'active' : '' }}">AI Chatbot</a>
                 </li>
                 <li>
-                    
                     @if(Auth::user()->user_type === 'admin')
                         <a href="{{ route('admin.products') }}" 
                            class="{{ ($page ?? '') === 'products' ? 'active' : '' }}">Products</a>
@@ -43,38 +42,15 @@
                            class="{{ ($page ?? '') === 'products' ? 'active' : '' }}">Products</a>
                     @endif
                 </li>
+
+                {{-- Profile link (moved from dropdown) --}}
+                <li>
+                    <a href="{{ Auth::user()->user_type === 'admin' ? route('admin.dashboard') : route('client.dashboard') }}" 
+                       class="{{ ($page ?? '') === 'profile' ? 'active' : '' }}">Profile</a>
+                </li>
             </ul>
         </nav>
         @endauth
-
-        <div class="dropdown">
-            <button class="dropdown-toggle" id="dropdownBtn"><i class="fas fa-bars"></i></button>
-            <div class="dropdown-menu" id="dropdownMenu">
-                @auth
-                    @php $isAdmin = Auth::user()->user_type === 'admin'; @endphp
-                    <a href="{{ $isAdmin ? route('admin.dashboard') : route('client.dashboard') }}" 
-                       class="{{ ($page ?? '') === 'profile' ? 'active' : '' }}">Profile</a>
-
-                    @if($isAdmin)
-                        
-                        <a href="{{ route('users.index') }}"
-                           class="{{ request()->routeIs('users.*') ? 'active' : (($page ?? '') === 'manage_users' ? 'active' : '') }}">
-                           Manage Users
-                        </a>
-                    @endif
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="logout-btn">
-                            <i class="fas fa-right-from-bracket"></i> Logout
-                        </button>
-                    </form>
-                @else
-                    <a href="{{ route('login.form') }}">Login</a>
-                    <a href="{{ route('register.form') }}">Register</a>
-                @endauth
-            </div>
-        </div>
     </div>
 
     <div class="container">
@@ -94,7 +70,6 @@
     </div>
 </footer>
 @endif
-
 
 <script src="{{ asset('js/' . ($layoutJs ?? 'client.js')) }}"></script>
 @stack('scripts')

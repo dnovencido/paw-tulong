@@ -92,12 +92,28 @@
         </form>
 
         {{-- Change Password Link --}}
-        <div style="text-align:center;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
-            <a href="#" id="changePasswordLink" 
-               style="color:#6b4a6b;font-weight:600;text-decoration:underline;cursor:pointer;">
-               Change Password
-            </a>
-        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;
+            margin-top:15px;padding-top:10px;border-top:1px solid #eee;">
+
+    {{-- Change Password Link --}}
+    <a href="#" id="changePasswordLink" 
+       style="color:#6b4a6b;font-weight:600;text-decoration:underline;cursor:pointer;">
+       Change Password
+    </a>
+
+    {{-- Logout Button --}}
+    <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+        @csrf
+        <button type="submit" 
+            style="background-color:#6b4a6b;color:white;font-weight:600;
+                   border:none;padding:8px 16px;border-radius:6px;
+                   cursor:pointer;transition:0.3s;">
+            <i class="fas fa-right-from-bracket"></i> Logout
+        </button>
+    </form>
+</div>
+
+
     </div>
 </div>
 

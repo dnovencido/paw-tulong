@@ -5,12 +5,22 @@
 @php
     use Illuminate\Support\Str;
     use App\Models\ChatLog;
+    use Illuminate\Support\Facades\DB;
+
     /**
      * Variables passed:
      * $user, $mostAsked, $recentConversations, $totalChats
      */
     $layoutCss = 'landing.css';
     $page = 'home';
+
+    // ✅ Count only frequently asked questions (asked > 1 time)
+    $frequentCount = ChatLog::select('question', DB::raw('COUNT(*) as count'))
+        ->whereNotNull('question')
+        ->where('question', '!=', '')
+        ->groupBy('question')
+        ->havingRaw('COUNT(*) > 1')
+        ->count();
 @endphp
 
 @section('content')
@@ -20,8 +30,7 @@
   <div class="summary-cards">
     @php
       $cards = [
-        
-        ['label'=>'Most Asked Questions', 'value'=>count($mostAsked ?? []), 'color'=>'#8b5c8b'],
+        ['label'=>'Most Asked Questions', 'value'=>$frequentCount, 'color'=>'#8b5c8b'],
       ];
     @endphp
     @foreach($cards as $card)
@@ -46,23 +55,37 @@
     <div class="faq-section">
       <h3>💬 Frequently Asked Questions</h3>
       <ul class="faq-list">
-        @forelse($mostAsked ?? [] as $i => $q)
+        @php
+          // ✅ Get only questions asked more than once
+          $frequentQs = ChatLog::select('question', DB::raw('COUNT(*) as count'))
+              ->whereNotNull('question')
+              ->where('question', '!=', '')
+              ->groupBy('question')
+              ->havingRaw('COUNT(*) > 1')
+              ->orderByDesc('count')
+              ->limit(10)
+              ->pluck('question');
+        @endphp
+
+        @forelse($frequentQs as $i => $q)
           @php
-            $answer = ChatLog::where('user_id', $user->id)
-                ->where('question', $q)
+            $answer = ChatLog::where('question', $q)
+                ->whereNotNull('answer')
+                ->where('answer', '!=', '')
                 ->orderByDesc('created_at')
                 ->value('answer');
           @endphp
+
           <li class="faq-item">
             <div class="faq-question" onclick="toggleFAQ(this)">
-              <strong>#{{ $i+1 }}</strong> — {{ Str::limit($q, 80) }}
+              <strong>#{{ $i + 1 }}</strong> — {{ Str::limit($q, 80) }}
             </div>
             <div class="faq-answer" style="display:none;">
               {!! $answer ? e($answer) : '<em>No answer recorded.</em>' !!}
             </div>
           </li>
         @empty
-          <li style="text-align:center;color:#999;">No questions yet.</li>
+          <li style="text-align:center;color:#999;">No frequently asked questions yet.</li>
         @endforelse
       </ul>
     </div>
